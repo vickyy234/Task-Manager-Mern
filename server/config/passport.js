@@ -1,0 +1,28 @@
+import passport from "passport";
+import { Strategy } from "passport-google-oauth20";
+import User from "../models/User.js";
+
+passport.use(new Strategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: '/auth/google/callback',
+},
+    async (_accessToken, _refreshToken, profile, done) => { //unused parameters are prefixed with an underscore
+        try {
+            const existingUser = await User.findOne({ googleId: profile.id });
+            if (existingUser) return done(null, existingUser);
+
+            console.log("Creating new user with Google Strategy:", profile);
+            const newUser = await User.create({
+                googleId: profile.id,
+                username: profile.displayName,
+                email: profile.emails[0].value,
+                image: profile.photos[0].value
+            });
+            return done(null, newUser);
+        } catch (e) {
+            console.error("Error in Google Strategy:", e);
+            return done(e, null);
+        }
+    }
+));
