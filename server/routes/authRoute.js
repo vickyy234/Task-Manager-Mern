@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import passport from 'passport';
-import generateTokenAndRedirect from 'jsonwebtoken';
+import generateTokenAndRedirect from '../controllers/authController.js';
 
 const router = Router();
 
@@ -9,7 +9,7 @@ router.get('/google',
 );
 
 router.get('/google/callback',
-    passport.authenticate('google', { session: false, failureRedirect: '/' }),
+    passport.authenticate('google', { session: false, failureRedirect: process.env.CLIENT_URL + '/login' }),
     generateTokenAndRedirect
 );
 

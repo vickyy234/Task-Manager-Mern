@@ -1,16 +1,11 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
-
-import './config/passport.js';
-import authRoutes from './routes/authRoute.js';
-import taskRoutes from './routes/taskRoute.js';
+import 'dotenv/config';
 
 // Middleware
-dotenv.config();
 const app = express();
 app.use(cors({
     origin: process.env.CLIENT_URL,
@@ -19,6 +14,11 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 app.use(passport.initialize());
+
+// Passport configuration + Routes file
+import './config/passport.js';
+import authRoutes from './routes/authRoute.js';
+import taskRoutes from './routes/taskRoute.js';
 
 //Routes
 app.use('/auth', authRoutes);

@@ -12,7 +12,6 @@ passport.use(new Strategy({
             const existingUser = await User.findOne({ googleId: profile.id });
             if (existingUser) return done(null, existingUser);
 
-            console.log("Creating new user with Google Strategy:", profile);
             const newUser = await User.create({
                 googleId: profile.id,
                 username: profile.displayName,
