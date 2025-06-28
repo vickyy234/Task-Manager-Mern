@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 
 import './config/passport.js';
 import authRoutes from './routes/authRoute.js';
+import taskRoutes from './routes/taskRoute.js';
 
 // Middleware
 dotenv.config();
@@ -21,6 +22,7 @@ app.use(passport.initialize());
 
 //Routes
 app.use('/auth', authRoutes);
+app.use('/task', taskRoutes);
 
 // Server + MongoDB
 app.listen(process.env.PORT, () => {
