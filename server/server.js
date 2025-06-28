@@ -16,7 +16,8 @@ app.use(cookieParser());
 app.use(passport.initialize());
 
 // Passport configuration + Routes file
-import './config/passport.js';
+import './config/google.js';
+import './config/github.js';
 import authRoutes from './routes/authRoute.js';
 import taskRoutes from './routes/taskRoute.js';
 
