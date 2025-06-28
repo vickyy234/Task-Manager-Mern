@@ -12,3 +12,5 @@ router.get('/google/callback',
     passport.authenticate('google', { session: false, failureRedirect: '/' }),
     generateTokenAndRedirect
 );
+
+export default router;
