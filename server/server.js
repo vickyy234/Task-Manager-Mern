@@ -3,9 +3,9 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
-import 'dotenv/config';
 
 // Middleware
+import 'dotenv/config';
 const app = express();
 app.use(cors({
     origin: process.env.CLIENT_URL,
@@ -36,7 +36,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 
 
-// Server and database health check (ignore it)
+// Server and database health check route(ignore it)
 app.get('/', (req, res) => {
     (mongoose.connection.readyState === 1) ?
         res.send(`<h1>Server is Running</h1> <h1 style="color:green">✅ Database connnected successfully!!</h1>`) :
