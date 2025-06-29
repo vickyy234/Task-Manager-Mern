@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Auth from './components/Auth.jsx';
+import TaskManager from './components/Task.jsx';
 
 function App() {
 
@@ -7,6 +8,7 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<Auth />} />
+        <Route path='/home' element={<TaskManager />} />
       </Routes>
     </>
   )

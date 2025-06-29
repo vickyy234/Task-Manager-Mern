@@ -8,8 +8,8 @@ function Auth() {
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
-                const res = await axios.get('/auth/verify', { withCredentials: true });
-                if (res) {
+                const res = await axios.get('/auth/verify');
+                if (res.ok) {
                     console.log('User is logged in');
                     navigate('/home');
                 }
