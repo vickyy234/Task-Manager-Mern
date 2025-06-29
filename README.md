@@ -24,9 +24,6 @@ A full-stack Task Management Web App built using the MERN stack. The app feature
 
 ---
 
-
----
-
 ## Tech Stack
 
 ### 🔧 Backend
