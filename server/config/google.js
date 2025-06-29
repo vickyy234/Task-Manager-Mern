@@ -8,7 +8,7 @@ passport.use(new Strategy({
     callbackURL: '/auth/google/callback',
 },
     async (_accessToken, _refreshToken, profile, done) => { //unused parameters are prefixed with an underscore
-        try {a
+        try {
             const existingUser = await User.findOne({ profileId: profile.id });
             if (existingUser) return done(null, existingUser);
 

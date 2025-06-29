@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import passport from 'passport';
 import generateTokenAndRedirect from '../controllers/authController.js';
+import authMiddleware from '../middleware/authMiddleware.js';
 
 const router = Router();
 
@@ -10,7 +11,7 @@ router.get('/google',
 );
 
 router.get('/google/callback',
-    passport.authenticate('google', { session: false, failureRedirect: process.env.CLIENT_URL + '/login' }),
+    passport.authenticate('google', { session: false, failureRedirect: process.env.CLIENT_URL + '/' }),
     generateTokenAndRedirect
 );
 
@@ -20,8 +21,13 @@ router.get('/github',
 );
 
 router.get('/github/callback',
-    passport.authenticate('github', { session: false, failureRedirect: process.env.CLIENT_URL + '/login' }),
+    passport.authenticate('github', { session: false, failureRedirect: process.env.CLIENT_URL + '/' }),
     generateTokenAndRedirect
 );
+
+// Verify route
+router.get('/verify', authMiddleware, (req, res) => {
+    res.status(200).end();
+});
 
 export default router;

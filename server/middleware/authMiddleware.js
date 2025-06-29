@@ -4,7 +4,7 @@ const authMiddleware = (req, res, next) => {
     const token = req.cookies.token;
 
     if (!token) {
-        return res.status(401).json({ message: "Unauthorized" });
+        return res.status(401).json({ message: "Unauthorized! Please login" });
     }
 
     try {
@@ -13,7 +13,7 @@ const authMiddleware = (req, res, next) => {
         next();
     } catch (error) {
         console.log("Token verification failed: ", error);
-        res.status(401).json({ message: "Invalid token" });
+        res.status(401).json({ message: "Invalid token!" });
     }
 };
 
