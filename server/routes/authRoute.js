@@ -21,7 +21,7 @@ router.get('/github',
 );
 
 router.get('/github/callback',
-    passport.authenticate('github', { session: false, failureRedirect: process.env.CLIENT_URL + '/' }),
+    passport.authenticate('github', { session: false, failureRedirect: process.env.CLIENT_URL + '/login' }),
     generateTokenAndRedirect
 );
 
