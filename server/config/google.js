@@ -5,7 +5,7 @@ import User from "../models/User.js";
 passport.use(new Strategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: '/auth/google/callback',
+    callbackURL: 'https://task-manager-mern-giim.onrender.com/auth/google/callback',
 },
     async (_accessToken, _refreshToken, profile, done) => { //unused parameters are prefixed with an underscore
         try {
