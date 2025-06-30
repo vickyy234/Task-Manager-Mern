@@ -25,7 +25,7 @@ import taskRoutes from './routes/taskRoute.js';
 app.use('/auth', authRoutes);
 app.use('/task', taskRoutes);
 
-/ Server and database health check route(ignore it)
+// Server and database health check route(ignore it)
 app.get('/healthcheck', (req, res) => {
     console.log(`✅ Ping received at ${new Date().toISOString()}`);
     (mongoose.connection.readyState === 1) ?
