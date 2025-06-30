@@ -43,6 +43,8 @@ app.get('/', (req, res) => {
 
 app.get('/check', (req, res) => {
     const userAgent = req.get('User-Agent');
-    console.log(`✅ Ping received at ${new Date().toISOString()}`);
+    const localTime = new Date().toLocaleString();
+    console.log(`✅ Ping received at ${localTime}`);
     console.log(`🧭 User-Agent: ${userAgent}`);
+    res.end();
 });
