@@ -41,7 +41,7 @@ app.get('/', (req, res) => {
     (mongoose.connection.readyState === 1) ? res.send(`<h1>Server is Running</h1> <h1 style="color:green">✅ Database connnected successfully!!</h1>`) : res.send(`<h1>Server is Running</h1> <h1 style="color:red;">❌ Database not connnected! Please check the connection string and any errors.</h1>`);
 });
 
-app.get('/health', (req, res) => {
+app.get('/check', (req, res) => {
     const userAgent = req.get('User-Agent');
     console.log(`✅ Ping received at ${new Date().toISOString()}`);
     console.log(`🧭 User-Agent: ${userAgent}`);
