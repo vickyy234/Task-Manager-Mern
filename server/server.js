@@ -20,10 +20,12 @@ import './config/google.js';
 import './config/github.js';
 import authRoutes from './routes/authRoute.js';
 import taskRoutes from './routes/taskRoute.js';
+import utilsRoutes from './routes/Utils.js';
 
 //Routes
 app.use('/auth', authRoutes);
 app.use('/task', taskRoutes);
+app.use('/utils', utilsRoutes);
 
 // Server + MongoDB
 app.listen(process.env.PORT, () => {

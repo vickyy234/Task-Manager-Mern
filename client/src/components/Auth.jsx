@@ -9,7 +9,7 @@ function Auth() {
         const checkLoginStatus = async () => {
             try {
                 const res = await axios.get('/auth/verify');
-                if (res.ok) {
+                if (res.status === 200) {
                     console.log('User is logged in');
                     navigate('/home');
                 }
