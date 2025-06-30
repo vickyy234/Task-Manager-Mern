@@ -26,7 +26,7 @@ app.use('/auth', authRoutes);
 app.use('/task', taskRoutes);
 
 // Server and database health check route(ignore it)
-app.get('/healthcheck', (req, res) => {
+app.get('/', (req, res) => {
     console.log(`✅ Ping received at ${new Date().toISOString()}`);
     (mongoose.connection.readyState === 1) ?
         res.send(`<h1>Server is Running</h1> <h1 style="color:green">✅ Database connnected successfully!!</h1>`) :
