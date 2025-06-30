@@ -25,6 +25,14 @@ import taskRoutes from './routes/taskRoute.js';
 app.use('/auth', authRoutes);
 app.use('/task', taskRoutes);
 
+/ Server and database health check route(ignore it)
+app.get('/health', (req, res) => {
+    console.log(`✅ Ping received at ${new Date().toISOString()}`);
+    (mongoose.connection.readyState === 1) ?
+        res.send(`<h1>Server is Running</h1> <h1 style="color:green">✅ Database connnected successfully!!</h1>`) :
+        res.send(`<h1>Server is Running</h1> <h1 style="color:red;">❌ Database not connnected! Please check the connection string and any errors.</h1>`)
+});
+
 // Server + MongoDB
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
@@ -33,14 +41,3 @@ app.listen(process.env.PORT, () => {
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error: ', err));
-
-
-
-
-// Server and database health check route(ignore it)
-app.get('/health', (req, res) => {
-    console.log(`✅ Ping received at ${new Date().toISOString()}`);
-    (mongoose.connection.readyState === 1) ?
-        res.send(`<h1>Server is Running</h1> <h1 style="color:green">✅ Database connnected successfully!!</h1>`) :
-        res.send(`<h1>Server is Running</h1> <h1 style="color:red;">❌ Database not connnected! Please check the connection string and any errors.</h1>`)
-});
