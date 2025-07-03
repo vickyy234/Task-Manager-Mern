@@ -63,9 +63,3 @@ A full-stack Task Management Web App built using the MERN stack. The app feature
 This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.  
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
----
-
-## Hackathon Note
-
-This project is a part of a hackathon run by https://www.katomaran.com
