@@ -53,7 +53,7 @@ const Auth = () => {
 
         {/*Right side*/}
         <div className="cursor-pointer transition duration-300 hover:scale-105 md:w-[50%]">
-          <img src="./pic.png" alt="Logo" />
+          <img src="./pic.png" alt="Logo" loading='lazy'/>
         </div>
       </div>
     </div>
