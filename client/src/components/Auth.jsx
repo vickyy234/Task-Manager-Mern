@@ -1,3 +1,6 @@
+import { FcGoogle } from 'react-icons/fc';
+import { BsGithub } from 'react-icons/bs';
+
 const Auth = () => {
   const handleGoogleLogin = async () => {
     try {
@@ -32,16 +35,18 @@ const Auth = () => {
           </h1>
           <button
             className="mt-3 flex cursor-pointer items-center gap-3 rounded-xl bg-blue-100 px-4 py-1 shadow-md transition duration-300 hover:scale-105 hover:bg-blue-300 hover:shadow-lg"
+            title="Google"
             onClick={handleGoogleLogin}
           >
-            <img src="./google.png" alt="Google Logo" className="h-6 w-6" />
+            <FcGoogle className="h-6 w-6" aria-hidden="true" />
             <span className="text-xl">Sign in with Google</span>
           </button>
           <button
             className="flex cursor-pointer items-center gap-3 rounded-xl bg-gray-200 px-4 py-1 shadow-md transition duration-300 hover:scale-105 hover:bg-gray-400 hover:shadow-lg"
+            title="GitHub"
             onClick={handleGithubLogin}
           >
-            <img src="./github.png" alt="GitHub Logo" className="h-6 w-6" />
+            <BsGithub className="h-6 w-6" aria-hidden="true" />
             <span className="text-xl">Sign in with GitHub</span>
           </button>
         </div>
