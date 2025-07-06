@@ -19,11 +19,13 @@ router.get("/getuserdetails", authMiddleware, async (req, res) => {
 
 router.get("/logout", authMiddleware, async (req, res) => {
   try {
-    res.clearCookie('token', {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none"
-    }).end();
+    res
+      .clearCookie("token", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      })
+      .json({ message: "Signout successful" });
   } catch (error) {
     console.error("Error during logout:", error);
     res.status(500).json({ message: "Internal server error" });

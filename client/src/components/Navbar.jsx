@@ -41,7 +41,8 @@ const Navbar = () => {
     if (!confirmLogout) return;
 
     try {
-      await axios.get('/utils/logout');
+      const res = await axios.get('/utils/logout');
+      alert(res.data.message);
       navigate('/');
     } catch (err) {
       console.error(
@@ -53,7 +54,7 @@ const Navbar = () => {
 
   return (
     <nav className="flex h-fit items-center justify-between bg-white px-5 shadow-md">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2" onClick={handleLogOut}>
         <img
           src="./logo.png"
           alt="App Logo"

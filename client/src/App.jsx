@@ -12,7 +12,7 @@ const App = () => {
       try {
         const res = await axios.get('/auth/verify');
         if (res.status === 200) {
-          console.log('User is logged in');
+          console.log('Login Successful');
           navigate('/dashboard');
         }
       } catch (error) {
