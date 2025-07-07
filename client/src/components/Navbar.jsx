@@ -50,14 +50,14 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="sticky top-0 flex h-fit items-center justify-between gap-2 bg-white px-2 shadow-md md:px-5">
+      <nav className="sticky top-0 flex items-center justify-between gap-2 bg-white px-2 shadow-md md:px-5">
         {/* Logo + Title */}
         <div className="flex items-center justify-center gap-2">
           <img
             src="./logo.png"
             alt="App Logo"
             title="Task Manager"
-            className="h-20 w-20 cursor-pointer transition duration-300 hover:scale-105"
+            className="h-12 w-12 cursor-pointer transition duration-300 hover:scale-105 md:h-20 md:w-20"
           />
           <span className="cursor-pointer text-lg font-bold md:text-2xl">
             Task Manager
@@ -81,9 +81,9 @@ const Navbar = () => {
         </ul>
 
         {/* Hamburger Menu for Mobile */}
-        <div className="md:hidden">
+        <div className="md:hidden py-2">
           <button
-            className="flex items-center gap-2 text-3xl focus:outline-none"
+            className="flex items-center gap-3 text-3xl focus:outline-none"
             title="Toggle Menu"
           >
             <RxHamburgerMenu onClick={() => setIsMenuOpen(!isMenuOpen)} />
@@ -93,7 +93,7 @@ const Navbar = () => {
                   src={user.image}
                   alt="User logo"
                   title={user.email}
-                  className="h-7 w-7 cursor-pointer rounded-full object-cover"
+                  className="h-12 w-12 cursor-pointer rounded-full object-cover"
                 />
               ) : (
                 <CgProfile
