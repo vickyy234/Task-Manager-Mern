@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { AiOutlineHome } from 'react-icons/ai';
 import { MdTaskAlt } from 'react-icons/md';
 import { CiUser, CiSettings, CiLogout } from 'react-icons/ci';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { CgProfile } from 'react-icons/cg';
+import { LiaHomeSolid } from 'react-icons/lia';
+import { GrHomeRounded } from 'react-icons/gr';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ const Navbar = () => {
             src="./logo.png"
             alt="App Logo"
             title="Task Manager"
-            className="h-12 w-12 cursor-pointer transition duration-300 hover:scale-105 md:h-20 md:w-20"
+            className="h-12 w-12 cursor-pointer transition duration-500 hover:scale-110 md:h-20 md:w-20"
           />
           <span className="cursor-pointer text-lg font-bold md:text-2xl">
             Task Manager
@@ -65,23 +66,23 @@ const Navbar = () => {
         </div>
 
         {/* Navigation Links */}
-        <ul className="text-decoration-none flex hidden gap-4 md:flex">
-          <li className="flex cursor-pointer items-center gap-2 text-xl text-gray-500 transition duration-300 hover:scale-105 hover:text-gray-700">
-            <AiOutlineHome className="h-4 w-4" />
+        <ul className="flex hidden gap-4 text-xl text-gray-700 md:flex">
+          <li className="flex cursor-pointer items-center gap-2 transition duration-300 hover:scale-105 hover:text-black">
+            <LiaHomeSolid className="h-4 w-4" />
             Dashboard
           </li>
-          <li className="flex cursor-pointer items-center gap-2 text-xl text-gray-500 transition duration-300 hover:scale-105 hover:text-gray-700">
+          <li className="flex cursor-pointer items-center gap-2 transition duration-300 hover:scale-105 hover:text-black">
             <MdTaskAlt className="h-4 w-4" />
             Tasks
           </li>
-          <li className="flex cursor-pointer items-center gap-2 text-xl text-gray-500 transition duration-300 hover:scale-105 hover:text-gray-700">
+          <li className="flex cursor-pointer items-center gap-2 transition duration-300 hover:scale-105 hover:text-black">
             <CiUser className="h-4 w-4" />
             Profile
           </li>
         </ul>
 
         {/* Hamburger Menu for Mobile */}
-        <div className="md:hidden py-2">
+        <div className="py-2 md:hidden">
           <button
             className="flex items-center gap-3 text-3xl focus:outline-none"
             title="Toggle Menu"
@@ -107,18 +108,18 @@ const Navbar = () => {
         </div>
 
         {/* User Profile and Dropdown */}
-        <div className="flex hidden items-center gap-2 rounded-full hover:ring md:flex">
+        <div className="group flex hidden items-center gap-2 rounded-lg md:flex">
           <div onClick={() => setShowImageModal(true)}>
             {user.image ? (
               <img
                 src={user.image}
                 alt="User logo"
                 title={user.email}
-                className="h-12 w-12 cursor-pointer rounded-full object-cover"
+                className="h-12 w-12 cursor-pointer rounded-full object-cover transition duration-300 hover:scale-105"
               />
             ) : (
               <CgProfile
-                className="h-10 w-10 cursor-pointer transition duration-300 hover:scale-105"
+                className="h-12 w-12 cursor-pointer rounded-full object-cover transition duration-300"
                 alt="User logo"
                 title={user.email}
               />
@@ -134,9 +135,9 @@ const Navbar = () => {
             </span>
             {showDropdown && (
               <div className="absolute right-0 z-50 mt-3 w-35 rounded-md bg-white shadow-lg ring-1 ring-black/10">
-                <ul className="flex flex-col gap-2 p-3 text-gray-700">
+                <ul className="flex flex-col gap-2 p-3 text-lg text-gray-700">
                   <li
-                    className="flex cursor-pointer items-center gap-2 px-2 py-1 text-lg hover:scale-105 hover:bg-gray-100 hover:text-black"
+                    className="flex cursor-pointer items-center gap-2 rounded-lg bg-gray-100 px-2 py-1 transition duration-300 hover:scale-105 hover:bg-gray-400 hover:text-black"
                     onClick={() => {
                       setShowDropdown(false);
                     }}
@@ -145,7 +146,7 @@ const Navbar = () => {
                     Profile
                   </li>
                   <li
-                    className="flex cursor-pointer items-center gap-2 px-2 py-1 text-lg hover:scale-105 hover:bg-gray-100 hover:text-black"
+                    className="flex cursor-pointer items-center gap-2 rounded-lg bg-gray-100 px-2 py-1 transition duration-300 hover:scale-105 hover:bg-gray-400 hover:text-black"
                     onClick={() => {
                       setShowDropdown(false);
                     }}
@@ -154,7 +155,7 @@ const Navbar = () => {
                     Settings
                   </li>
                   <li
-                    className="flex cursor-pointer items-center gap-2 px-2 py-1 text-lg hover:scale-105 hover:bg-gray-100 hover:text-black"
+                    className="flex cursor-pointer items-center gap-2 rounded-lg bg-gray-100 px-2 py-1 transition duration-300 hover:scale-105 hover:bg-red-400 hover:text-black"
                     onClick={() => {
                       setShowDropdown(false);
                       handleLogOut();
@@ -172,28 +173,28 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="align-left block px-5 pb-3 md:hidden">
-          <ul className="flex flex-col gap-4 text-gray-600">
+        <div className="align-left px-5 py-3 md:hidden">
+          <ul className="flex flex-col gap-3 text-gray-700">
             <li
-              className="flex cursor-pointer items-center gap-2 hover:text-black"
+              className="flex w-30 items-center gap-2 rounded-lg bg-gray-100 px-3 py-1"
               onClick={() => setIsMenuOpen(false)}
             >
-              <AiOutlineHome /> Dashboard
+              <GrHomeRounded className='h-[16px] w-[16px]'/> Dashboard
             </li>
             <li
-              className="flex cursor-pointer items-center gap-2 hover:text-black"
+              className="flex w-30 items-center gap-2 rounded-lg bg-gray-100 px-3 py-1"
               onClick={() => setIsMenuOpen(false)}
             >
               <MdTaskAlt /> Tasks
             </li>
             <li
-              className="flex cursor-pointer items-center gap-2 hover:text-black"
+              className="flex w-30 items-center gap-2 rounded-lg bg-gray-100 px-3 py-1"
               onClick={() => setIsMenuOpen(false)}
             >
               <CiUser /> Profile
             </li>
             <li
-              className="flex cursor-pointer items-center gap-2 hover:text-black"
+              className="flex w-30 items-center gap-2 rounded-lg bg-gray-100 px-3 py-1"
               onClick={() => {
                 setIsMenuOpen(false);
                 handleLogOut();
