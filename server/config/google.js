@@ -16,7 +16,8 @@ passport.use(new Strategy({
                 profileId: profile.id,
                 username: profile.displayName,
                 email: profile.emails[0].value,
-                image: profile.photos[0].value
+                image: profile.photos[0].value,
+                authProvider: profile.provider
             });
             return done(null, newUser);
         } catch (e) {

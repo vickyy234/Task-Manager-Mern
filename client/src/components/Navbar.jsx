@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { MdTaskAlt } from 'react-icons/md';
-import { CiUser, CiSettings, CiLogout } from 'react-icons/ci';
+import { CiUser, CiLogout } from 'react-icons/ci';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { CgProfile } from 'react-icons/cg';
@@ -14,6 +14,7 @@ const Navbar = () => {
   const [user, setUser] = useState({});
   const [showImageModal, setShowImageModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -22,6 +23,7 @@ const Navbar = () => {
         const res = await axios.get('/utils/getuserdetails');
         if (res.status === 200) {
           setUser(res.data);
+          sessionStorage.setItem('user', JSON.stringify(res.data));
         }
       } catch (error) {
         console.error(error.response?.data?.message || error.message);
@@ -31,6 +33,22 @@ const Navbar = () => {
 
     getUserDetails();
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+
+    if (showDropdown) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showDropdown]);
 
   const handleLogOut = async () => {
     const confirmLogout = window.confirm('Are you sure you want to log out?');
@@ -57,8 +75,9 @@ const Navbar = () => {
           <img
             src="./logo.png"
             alt="App Logo"
-            title="Task Manager"
+            title="Home"
             className="h-12 w-12 cursor-pointer transition duration-500 hover:scale-110 md:h-20 md:w-20"
+            onClick={() => navigate('/dashboard')}
           />
           <span className="cursor-pointer text-lg font-bold md:text-2xl">
             Task Manager
@@ -67,15 +86,24 @@ const Navbar = () => {
 
         {/* Navigation Links */}
         <ul className="flex hidden gap-4 text-xl text-gray-700 md:flex">
-          <li className="flex cursor-pointer items-center gap-2 transition duration-300 hover:scale-105 hover:text-black">
+          <li
+            className="flex cursor-pointer items-center gap-2 transition duration-300 hover:scale-105 hover:text-black"
+            onClick={() => navigate('/dashboard')}
+          >
             <LiaHomeSolid className="h-4 w-4" />
             Dashboard
           </li>
-          <li className="flex cursor-pointer items-center gap-2 transition duration-300 hover:scale-105 hover:text-black">
+          <li
+            className="flex cursor-pointer items-center gap-2 transition duration-300 hover:scale-105 hover:text-black"
+            onClick={() => navigate('/tasks')}
+          >
             <MdTaskAlt className="h-4 w-4" />
             Tasks
           </li>
-          <li className="flex cursor-pointer items-center gap-2 transition duration-300 hover:scale-105 hover:text-black">
+          <li
+            className="flex cursor-pointer items-center gap-2 transition duration-300 hover:scale-105 hover:text-black"
+            onClick={() => navigate('/profile')}
+          >
             <CiUser className="h-4 w-4" />
             Profile
           </li>
@@ -125,7 +153,7 @@ const Navbar = () => {
               />
             )}
           </div>
-          <div className="user-dropdown relative">
+          <div className="user-dropdown relative" ref={dropdownRef}>
             <span
               className="cursor-pointer pr-2 text-xl"
               title={user.username}
@@ -138,21 +166,10 @@ const Navbar = () => {
                 <ul className="flex flex-col gap-2 p-3 text-lg text-gray-700">
                   <li
                     className="flex cursor-pointer items-center gap-2 rounded-lg bg-gray-100 px-2 py-1 transition duration-300 hover:scale-105 hover:bg-gray-400 hover:text-black"
-                    onClick={() => {
-                      setShowDropdown(false);
-                    }}
+                    onClick={() => navigate('/profile')}
                   >
                     <CiUser className="h-5 w-5" />
                     Profile
-                  </li>
-                  <li
-                    className="flex cursor-pointer items-center gap-2 rounded-lg bg-gray-100 px-2 py-1 transition duration-300 hover:scale-105 hover:bg-gray-400 hover:text-black"
-                    onClick={() => {
-                      setShowDropdown(false);
-                    }}
-                  >
-                    <CiSettings className="h-5 w-5" />
-                    Settings
                   </li>
                   <li
                     className="flex cursor-pointer items-center gap-2 rounded-lg bg-gray-100 px-2 py-1 transition duration-300 hover:scale-105 hover:bg-red-400 hover:text-black"
@@ -177,26 +194,34 @@ const Navbar = () => {
           <ul className="flex flex-col gap-3 text-gray-700">
             <li
               className="flex w-30 items-center gap-2 rounded-lg bg-gray-100 px-3 py-1"
-              onClick={() => setIsMenuOpen(false)}
+              onClick={() => {
+                navigate('/dashboard');
+                setIsMenuOpen(false);
+              }}
             >
-              <GrHomeRounded className='h-[16px] w-[16px]'/> Dashboard
+              <GrHomeRounded /> Dashboard
             </li>
             <li
               className="flex w-30 items-center gap-2 rounded-lg bg-gray-100 px-3 py-1"
-              onClick={() => setIsMenuOpen(false)}
+              onClick={() => {
+                navigate('/tasks');
+                setIsMenuOpen(false);
+              }}
             >
               <MdTaskAlt /> Tasks
             </li>
             <li
               className="flex w-30 items-center gap-2 rounded-lg bg-gray-100 px-3 py-1"
-              onClick={() => setIsMenuOpen(false)}
+              onClick={() => {
+                navigate('/profile');
+                setIsMenuOpen(false);
+              }}
             >
               <CiUser /> Profile
             </li>
             <li
               className="flex w-30 items-center gap-2 rounded-lg bg-gray-100 px-3 py-1"
               onClick={() => {
-                setIsMenuOpen(false);
                 handleLogOut();
               }}
             >
