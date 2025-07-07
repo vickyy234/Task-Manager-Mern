@@ -5,12 +5,15 @@ import { AiOutlineHome } from 'react-icons/ai';
 import { MdTaskAlt } from 'react-icons/md';
 import { CiUser, CiSettings, CiLogout } from 'react-icons/ci';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
+import { RxHamburgerMenu } from 'react-icons/rx';
+import { CgProfile } from 'react-icons/cg';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState({});
   const [showImageModal, setShowImageModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const getUserDetails = async () => {
@@ -35,6 +38,7 @@ const Navbar = () => {
     try {
       const res = await axios.get('/utils/logout');
       alert(res.data.message);
+      console.log(res.data.message);
       navigate('/');
     } catch (err) {
       console.error(
@@ -46,19 +50,22 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="flex h-fit items-center justify-between bg-white px-5 shadow-md">
-        <div className="flex items-center gap-2">
+      <nav className="sticky top-0 flex h-fit items-center justify-between gap-2 bg-white px-2 shadow-md md:px-5">
+        {/* Logo + Title */}
+        <div className="flex items-center justify-center gap-2">
           <img
             src="./logo.png"
             alt="App Logo"
             title="Task Manager"
             className="h-20 w-20 cursor-pointer transition duration-300 hover:scale-105"
           />
-          <span className="cursor-pointer text-2xl font-bold">
+          <span className="cursor-pointer text-lg font-bold md:text-2xl">
             Task Manager
           </span>
         </div>
-        <ul className="text-decoration-none flex gap-4">
+
+        {/* Navigation Links */}
+        <ul className="text-decoration-none flex hidden gap-4 md:flex">
           <li className="flex cursor-pointer items-center gap-2 text-xl text-gray-500 transition duration-300 hover:scale-105 hover:text-gray-700">
             <AiOutlineHome className="h-4 w-4" />
             Dashboard
@@ -72,7 +79,35 @@ const Navbar = () => {
             Profile
           </li>
         </ul>
-        <div className="flex items-center gap-2 rounded-full hover:ring">
+
+        {/* Hamburger Menu for Mobile */}
+        <div className="md:hidden">
+          <button
+            className="flex items-center gap-2 text-3xl focus:outline-none"
+            title="Toggle Menu"
+          >
+            <RxHamburgerMenu onClick={() => setIsMenuOpen(!isMenuOpen)} />
+            <div onClick={() => setShowImageModal(true)}>
+              {user.image ? (
+                <img
+                  src={user.image}
+                  alt="User logo"
+                  title={user.email}
+                  className="h-7 w-7 cursor-pointer rounded-full object-cover"
+                />
+              ) : (
+                <CgProfile
+                  className="h-10 w-10 cursor-pointer transition duration-300 hover:scale-105"
+                  alt="User logo"
+                  title={user.email}
+                />
+              )}
+            </div>
+          </button>
+        </div>
+
+        {/* User Profile and Dropdown */}
+        <div className="flex hidden items-center gap-2 rounded-full hover:ring md:flex">
           <div onClick={() => setShowImageModal(true)}>
             {user.image ? (
               <img
@@ -82,8 +117,8 @@ const Navbar = () => {
                 className="h-12 w-12 cursor-pointer rounded-full object-cover"
               />
             ) : (
-              <CiUser
-                className="h-4 w-4 cursor-pointer transition duration-300 hover:scale-105"
+              <CgProfile
+                className="h-10 w-10 cursor-pointer transition duration-300 hover:scale-105"
                 alt="User logo"
                 title={user.email}
               />
@@ -92,12 +127,11 @@ const Navbar = () => {
           <div className="user-dropdown relative">
             <span
               className="cursor-pointer pr-2 text-xl"
-              title={user.image ? user.username : user.email}
+              title={user.username}
               onClick={() => setShowDropdown(!showDropdown)}
             >
               {user.username || 'User'}
             </span>
-
             {showDropdown && (
               <div className="absolute right-0 z-50 mt-3 w-35 rounded-md bg-white shadow-lg ring-1 ring-black/10">
                 <ul className="flex flex-col gap-2 p-3 text-gray-700">
@@ -136,15 +170,59 @@ const Navbar = () => {
         </div>
       </nav>
 
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="align-left block px-5 pb-3 md:hidden">
+          <ul className="flex flex-col gap-4 text-gray-600">
+            <li
+              className="flex cursor-pointer items-center gap-2 hover:text-black"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <AiOutlineHome /> Dashboard
+            </li>
+            <li
+              className="flex cursor-pointer items-center gap-2 hover:text-black"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <MdTaskAlt /> Tasks
+            </li>
+            <li
+              className="flex cursor-pointer items-center gap-2 hover:text-black"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <CiUser /> Profile
+            </li>
+            <li
+              className="flex cursor-pointer items-center gap-2 hover:text-black"
+              onClick={() => {
+                setIsMenuOpen(false);
+                handleLogOut();
+              }}
+            >
+              <CiLogout /> Sign Out
+            </li>
+          </ul>
+        </div>
+      )}
+
+      {/* Image Modal */}
       {showImageModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/5 backdrop-blur-sm">
           <div className="relative">
-            <img
-              src={user.image}
-              alt="Full View"
-              title="User profile"
-              className="max-h-[80vh] min-h-[300px] max-w-[90vw] min-w-[300px] rounded-lg object-cover shadow-lg"
-            />
+            {user.image ? (
+              <img
+                src={user.image}
+                alt="Full View"
+                title="User profile"
+                className="max-h-[80vh] min-h-[300px] max-w-[90vw] min-w-[300px] rounded-lg object-cover shadow-lg"
+              />
+            ) : (
+              <CgProfile
+                className="max-h-[80vh] min-h-[300px] max-w-[90vw] min-w-[300px] rounded-lg object-cover shadow-lg"
+                alt="User logo"
+                title={user.email}
+              />
+            )}
             <button
               className="absolute top-2 right-2 cursor-pointer text-3xl hover:scale-115 hover:text-red-500"
               title="Close"
