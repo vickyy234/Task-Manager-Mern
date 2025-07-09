@@ -11,28 +11,11 @@ import { GrHomeRounded } from 'react-icons/gr';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState({});
+  const user = JSON.parse(sessionStorage.getItem('user'));
   const [showImageModal, setShowImageModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const getUserDetails = async () => {
-      try {
-        const res = await axios.get('/utils/getuserdetails');
-        if (res.status === 200) {
-          setUser(res.data);
-          sessionStorage.setItem('user', JSON.stringify(res.data));
-        }
-      } catch (error) {
-        console.error(error.response?.data?.message || error.message);
-        navigate('/');
-      }
-    };
-
-    getUserDetails();
-  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -78,6 +61,7 @@ const Navbar = () => {
             title="Home"
             className="h-12 w-12 cursor-pointer transition duration-500 hover:scale-110 md:h-20 md:w-20"
             onClick={() => navigate('/dashboard')}
+            loading="lazy"
           />
           <span className="cursor-pointer text-lg font-bold md:text-2xl">
             Task Manager
@@ -120,14 +104,15 @@ const Navbar = () => {
               {user.image ? (
                 <img
                   src={user.image}
-                  alt="User logo"
+                  alt="User profile"
                   title={user.email}
                   className="h-12 w-12 cursor-pointer rounded-full object-cover"
+                  loading="lazy"
                 />
               ) : (
                 <CgProfile
                   className="h-10 w-10 cursor-pointer transition duration-300 hover:scale-105"
-                  alt="User logo"
+                  alt="User profile"
                   title={user.email}
                 />
               )}
@@ -141,14 +126,14 @@ const Navbar = () => {
             {user.image ? (
               <img
                 src={user.image}
-                alt="User logo"
+                alt="User profile"
                 title={user.email}
                 className="h-12 w-12 cursor-pointer rounded-full object-cover transition duration-300 hover:scale-105"
               />
             ) : (
               <CgProfile
                 className="h-12 w-12 cursor-pointer rounded-full object-cover transition duration-300"
-                alt="User logo"
+                alt="User profile"
                 title={user.email}
               />
             )}
@@ -238,9 +223,10 @@ const Navbar = () => {
             {user.image ? (
               <img
                 src={user.image}
-                alt="Full View"
+                alt="User profile"
                 title="User profile"
                 className="max-h-[80vh] min-h-[300px] max-w-[90vw] min-w-[300px] rounded-lg object-cover shadow-lg"
+                loading="lazy"
               />
             ) : (
               <CgProfile

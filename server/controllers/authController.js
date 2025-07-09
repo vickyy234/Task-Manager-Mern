@@ -10,7 +10,7 @@ const generateTokenAndRedirect = (req, res) => {
     secure: true,
     maxAge: 3600000,
   });
-  res.redirect(process.env.CLIENT_URL + "/dashboard");
+  res.redirect(process.env.CLIENT_URL + "/");
 };
 
 export default generateTokenAndRedirect;

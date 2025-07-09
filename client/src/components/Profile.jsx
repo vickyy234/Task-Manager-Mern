@@ -30,6 +30,7 @@ const Profile = () => {
                   src={user?.image}
                   alt="User Image"
                   className="h-[100px] w-[100px] rounded-full transition duration-300 hover:scale-105"
+                  loading="lazy"
                 />
               ) : (
                 <CiUser />
